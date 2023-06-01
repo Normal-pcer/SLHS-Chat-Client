@@ -1,0 +1,26 @@
+{
+  "name": "slhs-chat-client",
+  "version": "1.0.0",
+  "description": "SLHS-Chat，一款$B的即时通信软件",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Normal-pcer/SLHS-Chat-Client.git"
+  },
+  "author": "normal-pcer",
+  "license": "LGPL-2.1",
+  "bugs": {
+    "url": "https://github.com/Normal-pcer/SLHS-Chat-Client/issues"
+  },
+  "homepage": "https://github.com/Normal-pcer/SLHS-Chat-Client#readme",
+  "dependencies": {
+    "electron": "^25.0.0"
+  },
+  "devDependencies": {
+    "electron": "^25.0.0"
+  }
+}
