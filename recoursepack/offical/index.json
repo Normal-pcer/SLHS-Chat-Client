@@ -1,3 +1,4 @@
 {
-    "windowicon": "communication.png"
+    "window.icon": "/communication.png",
+    "sidebar.backgroundcolor": "#eee"
 }
