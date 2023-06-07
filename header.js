@@ -32,15 +32,28 @@ function getSingleResource(key) {
     let indexname = './recoursepack/index.json'
     let indexdata = JSON.parse(fs.readFileSync(indexname).toString())
 
-    let prev =
-        './recoursepack/' +
-        indexdata[getConfig()['resource']['usedResourcePack']]
-    let tmp = getResources()[key]
+    let pathprev = path.join(
+        __dirname,
+        'recoursepack/' + indexdata[getConfig()['resource']['usedResourcePack']]
+    )
+    let tmp = String(getResources()[key])
 
     let content = ''
-    if (tmp[0] != '/') content = tmp
-    else content = path.join(__dirname, path.join(prev, tmp))
-    return content
+    let type = ''
+
+    let splitPos = tmp.indexOf(':')
+    let before = tmp.substring(0, splitPos)
+    let after = tmp.substring(splitPos + 1)
+
+    type = before
+    if (before == 'path') {
+        content = tmp
+        content = content.replace('%packdir%', pathprev)
+    } else {
+        content = after
+    }
+
+    return [type, content]
 }
 
 module.exports = getSingleResource
