@@ -47,7 +47,7 @@ function getSingleResource(key) {
 
     type = before
     if (before == 'path') {
-        content = tmp
+        content = after
         content = content.replace('%packdir%', pathprev)
     } else {
         content = after

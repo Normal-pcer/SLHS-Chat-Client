@@ -17,6 +17,10 @@ html {
     top: 0%;
 }
 
+#side-top {
+    height: 10%;
+}
+
 #contents {
     padding-left: 25%;
     height: 100%;
@@ -26,11 +30,12 @@ html {
 #content-main {
     position: absolute;
     overflow: auto;
-    overscroll-behavior: contain;
+    display: flex;
+    flex-direction: column-reverse;
     height: 60%;
     width: 100%;
     top: 10%;
-}
+}   
 
 #text-box {
     position: absolute;
@@ -47,18 +52,48 @@ html {
 
 #text-box > form > textarea {
     resize: none;
-    position: relative;
-    top: 10%;
+    position: absolute;
+    top: 15%;
     height: 88%;
     width: 74%;
 }
 
 #side-top-ul > li {
     display: inline-block;
-    margin-left: 2.5%
+    margin-left: 2.5%;
+    height: 100%;
 }
 
 #side-top-ul {
     list-style: none;
     padding: 0% 5%;
+    height: 100%;
+}
+
+#side-top-ul > li > img {
+    height: 50%;
+}
+
+#content-main img {
+    width: 3%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#content-main>div>div {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#content-main .msg-username {
+    font-size: 75%;
+}
+
+#content-main p {
+    padding: 0;
+    margin: 0;
+}
+
+#submit {
+    display: block;
 }
