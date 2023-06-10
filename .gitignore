@@ -132,3 +132,6 @@ dist
 #vscode
 .vscode/*
 .VSCodeCounter/*
+
+#build
+slhs-chat-client-win32-x64/*
