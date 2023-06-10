@@ -35,7 +35,7 @@ html {
     height: 60%;
     width: 100%;
     top: 10%;
-}   
+}
 
 #text-box {
     position: absolute;
@@ -74,13 +74,23 @@ html {
     height: 50%;
 }
 
+#side-top-ul > li {
+    height: 50%;
+    padding: 2.5%;
+}
+
+#side-top-ul svg {
+    height: 25%;
+    transform: scale(4, 4);
+}
+
 #content-main img {
     width: 3%;
     display: inline-block;
     vertical-align: top;
 }
 
-#content-main>div>div {
+#content-main > div > div {
     display: inline-block;
     vertical-align: top;
 }
