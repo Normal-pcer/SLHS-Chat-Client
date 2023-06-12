@@ -1,4 +1,5 @@
 var config = undefined
+var lastMessageId = -1
 
 function getConfig() {
     if (config !== undefined) return config
@@ -9,6 +10,57 @@ function getConfig() {
     let obj = JSON.parse(fileData)
     config = obj
     return obj
+}
+
+async function getMessages() {
+    let server = getConfig()['server']
+    let axios = require('axios')
+    let data = new FormData()
+    let rt = undefined
+
+    data.append('user_id', 2)
+    data.append('token', '06ee41b96f4933c6ddd32e222817730d')
+    data.append('last', lastMessageId)
+    data.append('chat_id', -1)
+
+    await axios
+        .post(server + '/get_messages.php', data)
+        .then((rsp) => {
+            rt = rsp.data['data']
+            console.log(rt)
+            if (rt.length >= 1) {
+                let maxid = -1
+                rt.forEach((element) => {
+                    if (element['msg_id'] > maxid) maxid = element['msg_id']
+                })
+                lastMessageId = maxid
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+
+    return rt
+}
+
+function sendMessage(content) {
+    let server = getConfig()['server']
+    let axios = require('axios')
+    let data = new FormData()
+    data.append('user_id', 2)
+    data.append('token', '06ee41b96f4933c6ddd32e222817730d')
+    data.append('chat_id', 1)
+    data.append('content', content)
+
+    axios
+        .post(server + '/send_message.php', data)
+        .then((dat) => {
+            console.log(dat)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    return undefined
 }
 
 function getResources() {
@@ -58,4 +110,8 @@ function getSingleResource(key) {
     return [type, content]
 }
 
-module.exports = getSingleResource
+module.exports = {
+    getSingleResource,
+    getMessages,
+    sendMessage,
+}

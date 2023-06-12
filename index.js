@@ -1,13 +1,13 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const path = require('path')
-const getSingleResource = require('./header')
+const header = require('./header')
 
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
         },
-        icon: getSingleResource('window.icon'),
+        icon: header.getSingleResource('window.icon'),
     })
 
     ipcMain.on('log', (event, msg) => {
@@ -15,7 +15,17 @@ const createWindow = () => {
     })
 
     ipcMain.handle('get-resource', async function (event, key) {
-        return getSingleResource(key)
+        return header.getSingleResource(key)
+    })
+
+    ipcMain.handle('get-messages', async function (event) {
+        // console.log(header.getMessages())
+
+        return header.getMessages()
+    })
+
+    ipcMain.handle('send-message', async function(event, content) {
+        header.sendMessage(content)
     })
 
     mainWindow.loadFile('index.html')

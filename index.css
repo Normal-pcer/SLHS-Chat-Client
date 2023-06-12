@@ -90,9 +90,14 @@ html {
     vertical-align: top;
 }
 
+#content-main > div {
+    width: 100%;
+}
+
 #content-main > div > div {
     display: inline-block;
     vertical-align: top;
+    width: 54%;
 }
 
 #content-main .msg-username {
@@ -102,6 +107,12 @@ html {
 #content-main p {
     padding: 0;
     margin: 0;
+}
+
+#content-main p img {
+    display: block;
+    width: 50%;
+    height: auto;
 }
 
 #submit {
