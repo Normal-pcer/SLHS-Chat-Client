@@ -14,7 +14,7 @@ function addMessage(avatar, username, text) {
     rightElement.appendChild(textElement)
     element.appendChild(avatarElement)
     element.appendChild(rightElement)
-    element.className = "markdown-body"
+    element.className = 'markdown-body'
 
     let cm = document.getElementById('content-main')
     cm.insertBefore(element, cm.firstChild)
@@ -36,15 +36,25 @@ function getMessages() {
 
 const submitButtom = document.getElementById('submit')
 const txtarea = document.getElementsByTagName('textarea')
+const md2html = (mdtxt) => {
+    let converter = new showdown.Converter()
+    converter.setFlavor('github')
+
+    let arr = String(mdtxt).split('```')
+    let rst = ''
+    for (let i = 0; i < arr.length; i += 2) {
+        arr[i] = arr[i].replace(/\n/g, '\n\n')
+    }
+    for (let i = 0; i < arr.length; i++) {
+        rst += arr[i] + (i == arr.length - 1 ? '' : '```')
+    }
+    return converter.makeHtml(rst)
+}
 submitButtom.addEventListener('click', () => {
     let val = txtarea[0].value
     if (val == '') return
-    let converter = new showdown.Converter()
-    converter.setFlavor('github');
 
-    window.electronAPI.sendMessage(
-        converter.makeHtml(val.replace(/\n/g, '\n\n'))
-    )
+    window.electronAPI.sendMessage(md2html(val))
     txtarea[0].value = ''
 
     // getMessages()

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <form action="" method="post">
+            <input
+                type="text"
+                name="username"
+                id="input-username"
+                placeholder="用户ID"
+            />
+            <br />
+            <input
+                type="password"
+                name="password"
+                id="input-password"
+                placeholder="密码"
+            />
+            <br />
+            <input type="button" value="登录" id="input-login" />
+        </form>
+        <script>
+            document.getElementById('input-login').onclick = () => {
+                let username = document.getElementById('input-username').value
+                let password = document.getElementById('input-password').value
+
+                window.electronAPI.log('fuck')
+                window.electronAPI.login(username, password).then(() => {})
+            }
+        </script>
+    </body>
+</html>

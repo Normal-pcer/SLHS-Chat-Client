@@ -1,5 +1,10 @@
 var config = undefined
 var lastMessageId = -1
+var token = -1
+
+function setToken(new_token) {
+    token = new_token
+}
 
 function getConfig() {
     if (config !== undefined) return config
@@ -19,7 +24,7 @@ async function getMessages() {
     let rt = undefined
 
     data.append('user_id', 2)
-    data.append('token', '06ee41b96f4933c6ddd32e222817730d')
+    data.append('token', token)
     data.append('last', lastMessageId)
     data.append('chat_id', -1)
 
@@ -27,7 +32,6 @@ async function getMessages() {
         .post(server + '/get_messages.php', data)
         .then((rsp) => {
             rt = rsp.data['data']
-            console.log(rt)
             if (rt.length >= 1) {
                 let maxid = -1
                 rt.forEach((element) => {
@@ -48,7 +52,7 @@ function sendMessage(content) {
     let axios = require('axios')
     let data = new FormData()
     data.append('user_id', 2)
-    data.append('token', '06ee41b96f4933c6ddd32e222817730d')
+    data.append('token', token)
     data.append('chat_id', 1)
     data.append('content', content)
 
@@ -114,4 +118,6 @@ module.exports = {
     getSingleResource,
     getMessages,
     sendMessage,
+    getConfig,
+    setToken
 }
