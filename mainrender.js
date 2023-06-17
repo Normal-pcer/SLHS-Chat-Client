@@ -25,11 +25,14 @@ function getMessages() {
         let data = response
         for (let i = data.length - 1; i >= 0; i--) {
             let el = data[i]
-            addMessage(
-                './recoursepack/offical/communication.png',
-                '原批',
-                el['content']
-            )
+            const this_message_content = el['content']
+            window.electronAPI.getUserInfo(el['sender']).then((rsp) => {
+                addMessage(
+                    rsp['avatar'],
+                    rsp['username'],
+                    this_message_content
+                )
+            })
         }
     })
 }
@@ -60,16 +63,6 @@ submitButtom.addEventListener('click', () => {
     // getMessages()
 })
 
-addMessage(
-    './recoursepack/offical/communication.png',
-    '原批',
-    '你说得对但是原神'
-)
-addMessage(
-    './recoursepack/offical/communication.png',
-    '原批',
-    '是一款由米哈游自主研发的开放世界冒险游戏'
-)
 document.getElementsByTagName('form')[0].onsubmit = () => {}
 window.onload = () => {
     setInterval(getMessages, 1000)

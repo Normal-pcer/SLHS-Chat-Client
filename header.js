@@ -83,6 +83,25 @@ function getResources() {
     return JSON.parse(fileData.toString())
 }
 
+async function getUserInfo(uid) {
+    let axios = require('axios')
+    let data = new FormData()
+    let rtr = undefined
+    data.append('user_id', uid)
+    await axios
+        .post(getConfig()['server'] + '/get_user_info.php', data)
+        .then((dat) => {
+            rtr = dat['data']
+            rtr = rtr['data']
+            rtr['avatar'] = getConfig()['server'] + rtr['avatar']
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    console.log(rtr)
+    return rtr
+}
+
 function getSingleResource(key) {
     let fs = require('fs')
     let path = require('path')
@@ -119,5 +138,6 @@ module.exports = {
     getMessages,
     sendMessage,
     getConfig,
-    setToken
+    setToken,
+    getUserInfo,
 }
