@@ -27,11 +27,7 @@ function getMessages() {
             let el = data[i]
             const this_message_content = el['content']
             window.electronAPI.getUserInfo(el['sender']).then((rsp) => {
-                addMessage(
-                    rsp['avatar'],
-                    rsp['username'],
-                    this_message_content
-                )
+                addMessage(rsp['avatar'], rsp['username'], this_message_content)
             })
         }
     })
@@ -53,6 +49,15 @@ const md2html = (mdtxt) => {
     }
     return converter.makeHtml(rst)
 }
+const chatTopBar = document.getElementById('content-top')
+const setChatTitle = (new_title) => {
+    let titleElement = document.getElementById('chat-title')
+    titleElement.innerText = new_title
+}
+const setChatIcon = (new_icon) => {
+    let iconElement = document.getElementById('chat-icon')
+    iconElement.src = new_icon
+}
 submitButtom.addEventListener('click', () => {
     let val = txtarea[0].value
     if (val == '') return
@@ -62,11 +67,15 @@ submitButtom.addEventListener('click', () => {
 
     // getMessages()
 })
+var thisChatId = 1
 
 document.getElementsByTagName('form')[0].onsubmit = () => {}
 window.onload = () => {
     setInterval(getMessages, 1000)
-    getMessages()
+    window.electronAPI.getChatInfo(thisChatId).then((rsp) => {
+        setChatTitle(rsp['name'])
+        setChatIcon(rsp['icon'])
+    })
     let getrs = window.electronAPI.getResource
     getrs('sidebar.backgroundcolor').then((data) => {
         // window.electronAPI.log(JSON.stringify(data))

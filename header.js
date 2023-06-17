@@ -98,6 +98,25 @@ async function getUserInfo(uid) {
         .catch((err) => {
             console.log(err)
         })
+    return rtr
+}
+
+async function getChatInfo(chat_id) {
+    let axios = require('axios')
+    let data = new FormData()
+    let rtr = undefined
+    data.append('chat_id', chat_id)
+    await axios
+        .post(getConfig()['server'] + '/get_chat_info.php', data)
+        .then((dat) => {
+            console.log(dat)
+            rtr = dat['data']
+            rtr = rtr['data']
+            rtr['icon'] = getConfig()['server'] + rtr['icon']
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     console.log(rtr)
     return rtr
 }
@@ -140,4 +159,5 @@ module.exports = {
     getConfig,
     setToken,
     getUserInfo,
+    getChatInfo,
 }

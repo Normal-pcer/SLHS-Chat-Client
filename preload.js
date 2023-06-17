@@ -5,5 +5,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     getResource: (key) => ipcRenderer.invoke('get-resource', key),
     getMessages: () => ipcRenderer.invoke('get-messages'),
     sendMessage: (content) => ipcRenderer.invoke('send-message', content),
-    getUserInfo: (uid) => ipcRenderer.invoke('get-user-info', uid)
+    getUserInfo: (uid) => ipcRenderer.invoke('get-user-info', uid),
+    getChatInfo: (cid) => ipcRenderer.invoke('get-chat-info', cid),
 })

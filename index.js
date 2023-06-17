@@ -32,6 +32,10 @@ const createWindowMain = () => {
         return header.getUserInfo(uid)
     })
 
+    ipcMain.handle('get-chat-info', async function (event, cid) {
+        return header.getChatInfo(cid)
+    })
+
     mainWindow.loadFile('index.html')
 }
 
