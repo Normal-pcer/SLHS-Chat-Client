@@ -1,8 +1,10 @@
 var config = undefined
 var lastMessageId = -1
 var token = -1
+var thisUserId = -1
 
-function setToken(new_token) {
+function setToken(new_id, new_token) {
+    thisUserId = new_id
     token = new_token
 }
 
@@ -83,11 +85,15 @@ function getResources() {
     return JSON.parse(fileData.toString())
 }
 
-async function getUserInfo(uid) {
+async function getUserInfo(args) {
+    let uid = args[0]
     let axios = require('axios')
     let data = new FormData()
     let rtr = undefined
+    if (uid == -1) uid = thisUserId
     data.append('user_id', uid)
+    data.append('get_chats', args[1])
+    console.log(args)
     await axios
         .post(getConfig()['server'] + '/get_user_info.php', data)
         .then((dat) => {
@@ -109,7 +115,6 @@ async function getChatInfo(chat_id) {
     await axios
         .post(getConfig()['server'] + '/get_chat_info.php', data)
         .then((dat) => {
-            console.log(dat)
             rtr = dat['data']
             rtr = rtr['data']
             rtr['icon'] = getConfig()['server'] + rtr['icon']
@@ -117,7 +122,6 @@ async function getChatInfo(chat_id) {
         .catch((err) => {
             console.log(err)
         })
-    console.log(rtr)
     return rtr
 }
 

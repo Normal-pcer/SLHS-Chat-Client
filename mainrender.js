@@ -1,3 +1,6 @@
+var thisChatId = 1
+const consolelog = window.electronAPI.log
+
 function addMessage(avatar, username, text) {
     let element = document.createElement('div')
     let avatarElement = document.createElement('img')
@@ -20,19 +23,55 @@ function addMessage(avatar, username, text) {
     cm.insertBefore(element, cm.firstChild)
 }
 
+function clearMessages() {
+    let cm = document.getElementById('content-main')
+    cm.innerHTML = ''
+}
+
 function getMessages() {
     window.electronAPI.getMessages().then((response) => {
         let data = response
         for (let i = data.length - 1; i >= 0; i--) {
             let el = data[i]
-            const this_message_content = el['content']
-            window.electronAPI.getUserInfo(el['sender']).then((rsp) => {
-                addMessage(rsp['avatar'], rsp['username'], this_message_content)
-            })
+            if (el['from'] == thisChatId) {
+                const this_message_content = el['content']
+                window.electronAPI
+                    .getUserInfo([el['sender'], false])
+                    .then((rsp) => {
+                        addMessage(
+                            rsp['avatar'],
+                            rsp['username'],
+                            this_message_content
+                        )
+                    })
+            }
         }
     })
 }
+function getChats() {
+    window.electronAPI.getUserInfo([-1, true]).then((rsp) => {
+        consolelog(JSON.stringify(rsp))
+        let chats = JSON.parse(rsp['chats'])
+        chats.forEach((element) => {
+            window.electronAPI.getChatInfo(element).then((info) => {
+                let icon = info['icon']
+                let title = info['name']
 
+                let container = document.createElement('div')
+                let iconEle = document.createElement('img')
+                let titleEle = document.createElement('p')
+
+                iconEle.src = icon
+                titleEle.innerText = title
+
+                container.appendChild(iconEle)
+                container.appendChild(titleEle)
+
+                document.getElementById('chat-list').appendChild(container)
+            })
+        })
+    })
+}
 const submitButtom = document.getElementById('submit')
 const txtarea = document.getElementsByTagName('textarea')
 const md2html = (mdtxt) => {
@@ -49,7 +88,6 @@ const md2html = (mdtxt) => {
     }
     return converter.makeHtml(rst)
 }
-const chatTopBar = document.getElementById('content-top')
 const setChatTitle = (new_title) => {
     let titleElement = document.getElementById('chat-title')
     titleElement.innerText = new_title
@@ -67,7 +105,6 @@ submitButtom.addEventListener('click', () => {
 
     // getMessages()
 })
-var thisChatId = 1
 
 document.getElementsByTagName('form')[0].onsubmit = () => {}
 window.onload = () => {
@@ -76,9 +113,10 @@ window.onload = () => {
         setChatTitle(rsp['name'])
         setChatIcon(rsp['icon'])
     })
+    getChats()
     let getrs = window.electronAPI.getResource
     getrs('sidebar.backgroundcolor').then((data) => {
-        // window.electronAPI.log(JSON.stringify(data))
+        // consolelog(JSON.stringify(data))
         document.getElementById('sidebar').style.backgroundColor = data[1]
     })
     getrs('sidebar.top.mentions').then((data) => {

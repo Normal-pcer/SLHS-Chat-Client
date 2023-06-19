@@ -28,8 +28,8 @@ const createWindowMain = () => {
         return header.sendMessage(content)
     })
 
-    ipcMain.handle('get-user-info', async function (event, uid) {
-        return header.getUserInfo(uid)
+    ipcMain.handle('get-user-info', async function (event, args) {
+        return header.getUserInfo(args)
     })
 
     ipcMain.handle('get-chat-info', async function (event, cid) {
@@ -60,7 +60,7 @@ const createWindowLogin = () => {
                 rsp = response['data']
                 console.log(rsp)
                 if (rsp['success']) {
-                    header.setToken(rsp['token'])
+                    header.setToken(u, rsp['token'])
                     createWindowMain()
                     loginWindow.destroy()
                 }

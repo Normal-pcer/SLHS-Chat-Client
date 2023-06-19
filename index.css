@@ -97,6 +97,14 @@ html {
     transform: scale(4, 4);
 }
 
+#chat-list img {
+    width: 15%;
+    display: inline-block;
+}
+
+#chat-list p {
+    display: inline-block;
+}
 #content-main img {
     width: 3%;
     display: inline-block;
@@ -127,7 +135,6 @@ html {
     width: 50%;
     height: auto;
 }
-
 
 #submit {
     display: block;
