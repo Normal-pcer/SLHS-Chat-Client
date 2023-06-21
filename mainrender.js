@@ -28,16 +28,16 @@ function clearMessages() {
     cm.innerHTML = ''
 }
 
-function getMessages() {
-    window.electronAPI.getMessages().then((response) => {
+async function getMessages() {
+    window.electronAPI.getMessages().then(async (response) => {
         let data = response
         for (let i = data.length - 1; i >= 0; i--) {
             let el = data[i]
             if (el['from'] == thisChatId) {
                 const this_message_content = el['content']
-                window.electronAPI
+                await window.electronAPI
                     .getUserInfo([el['sender'], false])
-                    .then((rsp) => {
+                    .then(function (rsp) {
                         addMessage(
                             rsp['avatar'],
                             rsp['username'],
@@ -50,7 +50,6 @@ function getMessages() {
 }
 function getChats() {
     window.electronAPI.getUserInfo([-1, true]).then((rsp) => {
-        consolelog(JSON.stringify(rsp))
         let chats = JSON.parse(rsp['chats'])
         chats.forEach((element) => {
             window.electronAPI.getChatInfo(element).then((info) => {
@@ -71,6 +70,9 @@ function getChats() {
             })
         })
     })
+}
+function sendmsg(content) {
+    window.electronAPI.sendMessage([content, thisChatId])
 }
 const submitButtom = document.getElementById('submit')
 const txtarea = document.getElementsByTagName('textarea')
@@ -100,7 +102,7 @@ submitButtom.addEventListener('click', () => {
     let val = txtarea[0].value
     if (val == '') return
 
-    window.electronAPI.sendMessage(md2html(val))
+    sendmsg(md2html(val))
     txtarea[0].value = ''
 
     // getMessages()

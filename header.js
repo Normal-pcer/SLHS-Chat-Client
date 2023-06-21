@@ -49,20 +49,18 @@ async function getMessages() {
     return rt
 }
 
-function sendMessage(content) {
+function sendMessage(content, chat) {
     let server = getConfig()['server']
     let axios = require('axios')
     let data = new FormData()
-    data.append('user_id', 2)
+    data.append('user_id', thisUserId)
     data.append('token', token)
-    data.append('chat_id', 1)
+    data.append('chat_id', chat)
     data.append('content', content)
 
     axios
         .post(server + '/send_message.php', data)
-        .then((dat) => {
-            console.log(dat)
-        })
+        .then((dat) => {})
         .catch((err) => {
             console.log(err)
         })
@@ -93,7 +91,6 @@ async function getUserInfo(args) {
     if (uid == -1) uid = thisUserId
     data.append('user_id', uid)
     data.append('get_chats', args[1])
-    console.log(args)
     await axios
         .post(getConfig()['server'] + '/get_user_info.php', data)
         .then((dat) => {

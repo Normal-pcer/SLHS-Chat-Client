@@ -24,8 +24,8 @@ const createWindowMain = () => {
         return header.getMessages()
     })
 
-    ipcMain.handle('send-message', async function (event, content) {
-        return header.sendMessage(content)
+    ipcMain.handle('send-message', async function (event, args) {
+        return header.sendMessage(args[0], args[1])
     })
 
     ipcMain.handle('get-user-info', async function (event, args) {
