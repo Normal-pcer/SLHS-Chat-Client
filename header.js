@@ -18,14 +18,16 @@ function getConfig() {
     config = obj
     return obj
 }
-
+function resetMessageBox() {
+    lastMessageId = -1
+}
 async function getMessages() {
     let server = getConfig()['server']
     let axios = require('axios')
     let data = new FormData()
     let rt = undefined
 
-    data.append('user_id', 2)
+    data.append('user_id', thisUserId)
     data.append('token', token)
     data.append('last', lastMessageId)
     data.append('chat_id', -1)
@@ -161,4 +163,5 @@ module.exports = {
     setToken,
     getUserInfo,
     getChatInfo,
+    resetMessageBox,
 }

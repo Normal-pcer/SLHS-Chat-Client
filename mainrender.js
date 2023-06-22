@@ -62,7 +62,9 @@ function getChats() {
 
                 iconEle.src = icon
                 titleEle.innerText = title
-
+                iconEle.addEventListener('click', () => {
+                    changechat(info['chat_id'])
+                })
                 container.appendChild(iconEle)
                 container.appendChild(titleEle)
 
@@ -73,6 +75,15 @@ function getChats() {
 }
 function sendmsg(content) {
     window.electronAPI.sendMessage([content, thisChatId])
+}
+function changechat(newch) {
+    thisChatId = newch
+    clearMessages()
+    window.electronAPI.resetMessageBox()
+    window.electronAPI.getChatInfo(newch).then((info) => {
+        setChatIcon(info['icon'])
+        setChatTitle(info['name'])
+    })
 }
 const submitButtom = document.getElementById('submit')
 const txtarea = document.getElementsByTagName('textarea')
@@ -98,6 +109,7 @@ const setChatIcon = (new_icon) => {
     let iconElement = document.getElementById('chat-icon')
     iconElement.src = new_icon
 }
+
 submitButtom.addEventListener('click', () => {
     let val = txtarea[0].value
     if (val == '') return

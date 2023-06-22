@@ -7,4 +7,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
     sendMessage: (args) => ipcRenderer.invoke('send-message', args),
     getUserInfo: (uid) => ipcRenderer.invoke('get-user-info', uid),
     getChatInfo: (args) => ipcRenderer.invoke('get-chat-info', args),
+    resetMessageBox: () => ipcRenderer.send('msg-box-rst'),
 })

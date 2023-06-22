@@ -36,6 +36,10 @@ const createWindowMain = () => {
         return header.getChatInfo(cid)
     })
 
+    ipcMain.on('msg-box-rst', () => {
+        header.resetMessageBox()
+    })
+
     mainWindow.loadFile('index.html')
 }
 
