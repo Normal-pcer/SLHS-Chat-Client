@@ -47,7 +47,6 @@ async function getMessages() {
         .catch((err) => {
             console.log(err)
         })
-
     return rt
 }
 

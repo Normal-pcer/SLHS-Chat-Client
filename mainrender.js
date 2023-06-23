@@ -1,6 +1,14 @@
 var thisChatId = 1
 const consolelog = window.electronAPI.log
 
+function specialtxt(txt) {
+    let reg = new RegExp('&lt;color:(.*?)&gt;(.*?)&lt;/color&gt;', 'gi')
+
+    return txt.replace(reg, (rs, $1, $2) => {
+        return "<span style='color:" + $1 + "'>" + $2 + '</span>'
+    })
+}
+
 function addMessage(avatar, username, text) {
     let element = document.createElement('div')
     let avatarElement = document.createElement('img')
@@ -10,8 +18,14 @@ function addMessage(avatar, username, text) {
 
     avatarElement.src = avatar
     usernameElement.innerHTML = username
-    textElement.innerHTML = filterXSS(text)
+    textElement.innerHTML = specialtxt(filterXSS(text))
+    consolelog(specialtxt(filterXSS(text)))
     usernameElement.className = 'msg-username'
+    textElement.querySelectorAll('img').forEach((el) => {
+        el.addEventListener('click', () => {
+            window.electronAPI.showImage(el.src)
+        })
+    })
 
     rightElement.appendChild(usernameElement)
     rightElement.appendChild(textElement)

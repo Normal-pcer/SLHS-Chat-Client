@@ -1,4 +1,4 @@
-const { contextBridge, ipcRenderer } = require('electron')
+const { contextBridge, ipcRenderer, ipcMain } = require('electron')
 
 contextBridge.exposeInMainWorld('electronAPI', {
     log: (txt) => ipcRenderer.send('log', txt),
@@ -8,4 +8,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
     getUserInfo: (uid) => ipcRenderer.invoke('get-user-info', uid),
     getChatInfo: (args) => ipcRenderer.invoke('get-chat-info', args),
     resetMessageBox: () => ipcRenderer.send('msg-box-rst'),
+    showImage: (src) => ipcRenderer.send('show-img', src),
 })

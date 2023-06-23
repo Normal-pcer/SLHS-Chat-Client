@@ -40,6 +40,11 @@ const createWindowMain = () => {
         header.resetMessageBox()
     })
 
+    ipcMain.on('show-img', (e, s) => {
+        let { shell } = require('electron')
+        shell.openExternal(s)
+    })
+
     mainWindow.loadFile('index.html')
 }
 
