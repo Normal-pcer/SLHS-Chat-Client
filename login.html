@@ -16,17 +16,68 @@
                 id="input-password"
                 placeholder="密码"
             />
+            <div id="op">
+                <input
+                    type="text"
+                    name="email"
+                    id="input-email"
+                    placeholder="电子邮箱"
+                />
+            </div>
             <br />
             <input type="button" value="登录" id="input-login" />
+            <p id="signup">点击注册</p>
         </form>
         <script>
-            document.getElementById('input-login').onclick = () => {
-                let username = document.getElementById('input-username').value
-                let password = document.getElementById('input-password').value
+            let signup = false
+            let email = document.getElementById('op').innerHTML
+            document.getElementById('op').innerHTML = ''
 
-                window.electronAPI.log('fuck')
-                window.electronAPI.login(username, password).then(() => {})
-            }
+            document
+                .getElementById('input-login')
+                .addEventListener('click', () => {
+                    window.electronAPI.log(signup)
+                    if (signup) {
+                        let username =
+                            document.getElementById('input-username').value
+                        let password =
+                            document.getElementById('input-password').value
+                        let email = document.getElementById('input-email').value
+
+                        window.electronAPI
+                            .signup([username, password, email])
+                            .then((r) => {
+                                window.electronAPI.log(r)
+                            })
+                    } else {
+                        let username =
+                            document.getElementById('input-username').value
+                        let password =
+                            document.getElementById('input-password').value
+
+                        window.electronAPI
+                            .login([username, password])
+                            .then((r) => {
+                                window.electronAPI.log(r)
+                            })
+                    }
+                })
+
+            document.getElementById('signup').addEventListener('click', () => {
+                let element = document.getElementById('signup')
+                if (signup) {
+                    element.innerHTML = '点击注册'
+                    document.getElementById('op').innerHTML = ''
+                    document.getElementById('input-username').placeholder =
+                        '用户ID'
+                } else {
+                    element.innerHTML = '点击返回登录'
+                    document.getElementById('op').innerHTML = email
+                    document.getElementById('input-username').placeholder =
+                        '用户名'
+                }
+                signup = !signup
+            })
         </script>
     </body>
 </html>

@@ -56,7 +56,13 @@ const createWindowLogin = () => {
         icon: header.getSingleResource('window.icon'),
     })
 
-    ipcMain.handle('login', async function (e, u, p) {
+    ipcMain.on('log', (event, msg) => {
+        console.log(msg)
+    })
+
+    const login = async function (e, args) {
+        u = args[0]
+        p = args[1]
         let axios = require('axios')
         let data = new FormData()
         let sha256 = require('crypto-js/sha256')
@@ -72,6 +78,33 @@ const createWindowLogin = () => {
                     header.setToken(u, rsp['token'])
                     createWindowMain()
                     loginWindow.destroy()
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        return rsp
+    }
+
+    ipcMain.handle('login', login)
+    ipcMain.handle('sign-up', async (ev, args) => {
+        u = args[0]
+        p = args[1]
+        e = args[2]
+        let axios = require('axios')
+        let data = new FormData()
+        let sha256 = require('crypto-js/sha256')
+        data.append('username', u)
+        data.append('password', sha256(p))
+        data.append('email', e)
+        let rsp = undefined
+        await axios
+            .post(header.getConfig()['server'] + '/signup.php', data)
+            .then((response) => {
+                rsp = response['data']
+                console.log(rsp)
+                if (rsp['status'] == 'ok') {
+                    login(undefined, [rsp['id'], p])
                 }
             })
             .catch((err) => {

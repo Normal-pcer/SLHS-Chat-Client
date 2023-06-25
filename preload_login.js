@@ -2,5 +2,6 @@ const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('electronAPI', {
     log: (txt) => ipcRenderer.send('log', txt),
-    login: (user, pass) => ipcRenderer.invoke('login', user, pass)
+    login: (args) => ipcRenderer.invoke('login', args),
+    signup: (args) => ipcRenderer.invoke('sign-up', args),
 })
