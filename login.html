@@ -27,11 +27,20 @@
             <br />
             <input type="button" value="登录" id="input-login" />
             <p id="signup">点击注册</p>
+            服务器：<input
+                type="text"
+                id="server"
+                name="server"
+                placeholder="服务器"
+            />
         </form>
         <script>
             let signup = false
             let email = document.getElementById('op').innerHTML
             document.getElementById('op').innerHTML = ''
+            window.electronAPI.getserver().then((ser) => {
+                document.getElementById('server').value = ser
+            })
 
             document
                 .getElementById('input-login')
@@ -43,9 +52,10 @@
                         let password =
                             document.getElementById('input-password').value
                         let email = document.getElementById('input-email').value
+                        let server = document.getElementById('server').value
 
                         window.electronAPI
-                            .signup([username, password, email])
+                            .signup([username, password, email, server])
                             .then((r) => {
                                 window.electronAPI.log(r)
                             })
@@ -54,9 +64,10 @@
                             document.getElementById('input-username').value
                         let password =
                             document.getElementById('input-password').value
+                        let server = document.getElementById('server').value
 
                         window.electronAPI
-                            .login([username, password])
+                            .login([username, password, server])
                             .then((r) => {
                                 window.electronAPI.log(r)
                             })

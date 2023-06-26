@@ -18,6 +18,13 @@ function getConfig() {
     config = obj
     return obj
 }
+function setConfig(conf) {
+    config = config
+    let path = require('path')
+    let filename = path.join(__dirname, './config.json')
+    let fs = require('fs')
+    fs.writeFileSync(filename, JSON.stringify(conf))
+}
 function resetMessageBox() {
     lastMessageId = -1
 }
@@ -163,4 +170,5 @@ module.exports = {
     getUserInfo,
     getChatInfo,
     resetMessageBox,
+    setConfig,
 }

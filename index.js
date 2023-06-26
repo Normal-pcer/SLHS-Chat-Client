@@ -60,9 +60,19 @@ const createWindowLogin = () => {
         console.log(msg)
     })
 
+    ipcMain.handle('get-server', async (e) => {
+        return header.getConfig()['server']
+    })
+
     const login = async function (e, args) {
         u = args[0]
         p = args[1]
+        s = args[2]
+        let config = header.getConfig()
+        if (config['server'] != s) {
+            config['server'] = s
+            header.setConfig(config)
+        }
         let axios = require('axios')
         let data = new FormData()
         let sha256 = require('crypto-js/sha256')
@@ -70,7 +80,7 @@ const createWindowLogin = () => {
         data.append('password', sha256(p))
         let rsp = undefined
         await axios
-            .post(header.getConfig()['server'] + '/login.php', data)
+            .post(s + '/login.php', data)
             .then((response) => {
                 rsp = response['data']
                 console.log(rsp)
@@ -91,6 +101,12 @@ const createWindowLogin = () => {
         u = args[0]
         p = args[1]
         e = args[2]
+        s = args[3]
+        let config = header.getConfig()
+        if (config['server'] != s) {
+            config['server'] = s
+            header.setConfig(config)
+        }
         let axios = require('axios')
         let data = new FormData()
         let sha256 = require('crypto-js/sha256')
@@ -99,12 +115,12 @@ const createWindowLogin = () => {
         data.append('email', e)
         let rsp = undefined
         await axios
-            .post(header.getConfig()['server'] + '/signup.php', data)
+            .post(s + '/signup.php', data)
             .then((response) => {
                 rsp = response['data']
                 console.log(rsp)
                 if (rsp['status'] == 'ok') {
-                    login(undefined, [rsp['id'], p])
+                    login(undefined, [rsp['id'], p, s])
                 }
             })
             .catch((err) => {
@@ -113,7 +129,7 @@ const createWindowLogin = () => {
         return rsp
     })
 
-    loginWindow.loadFile('login.html')
+    loginWindow.loadFile(path.join(__dirname, 'login.html'))
 }
 
 app.whenReady().then(() => {
