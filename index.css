@@ -1,0 +1,141 @@
+html {
+    overflow: hidden;
+}
+
+#main {
+    height: 100vh;
+    padding: 0%;
+}
+
+#sidebar {
+    position: absolute;
+    width: 25%;
+    height: 100%;
+    background-color: #3498db;
+    display: block;
+    left: 0%;
+    top: 0%;
+}
+
+#side-top {
+    height: 10%;
+}
+
+#contents {
+    padding-left: 25%;
+    height: 100%;
+    width: 75%;
+}
+
+#content-top {
+    height: 10%;
+}
+
+#content-top img {
+    height: 60%;
+    display: inline-block;
+}
+
+#content-top h3 {
+    display: inline-block;
+}
+
+#content-main {
+    position: absolute;
+    overflow: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    height: 60%;
+    width: 100%;
+    top: 10%;
+}
+
+#text-box {
+    position: absolute;
+    height: 25%;
+    /* border: 5px solid #333; */
+    width: 74%;
+    height: 30%;
+    top: 70%;
+}
+
+#text-box > form {
+    height: 100%;
+}
+
+#text-box > form > textarea {
+    resize: none;
+    position: absolute;
+    top: 15%;
+    height: 88%;
+    width: 74%;
+}
+
+#side-top-ul > li {
+    display: inline-block;
+    margin-left: 2.5%;
+    height: 100%;
+}
+
+#side-top-ul {
+    list-style: none;
+    padding: 0% 5%;
+    height: 100%;
+}
+
+#side-top-ul > li > img {
+    height: 50%;
+}
+
+#side-top-ul > li {
+    height: 50%;
+    padding: 2.5%;
+}
+
+#side-top-ul svg {
+    height: 25%;
+    transform: scale(4, 4);
+}
+
+#chat-list img {
+    width: 15%;
+    display: inline-block;
+}
+
+#chat-list p {
+    display: inline-block;
+}
+#content-main img {
+    width: 3%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#content-main > div {
+    width: 100%;
+}
+
+#content-main > div > div {
+    display: inline-block;
+    vertical-align: top;
+    width: 54%;
+}
+
+#content-main .msg-username {
+    font-size: 75%;
+}
+
+#content-main p {
+    padding: 0;
+    margin: 0;
+}
+
+#content-main p img {
+    display: block;
+    width: 50%;
+    height: auto;
+}
+
+#submit {
+    display: block;
+}

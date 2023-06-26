@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <form action="" method="post">
+            <input
+                type="text"
+                name="username"
+                id="input-username"
+                placeholder="用户ID"
+            />
+            <br />
+            <input
+                type="password"
+                name="password"
+                id="input-password"
+                placeholder="密码"
+            />
+            <div id="op">
+                <input
+                    type="text"
+                    name="email"
+                    id="input-email"
+                    placeholder="电子邮箱"
+                />
+            </div>
+            <br />
+            <input type="button" value="登录" id="input-login" />
+            <p id="signup">点击注册</p>
+            服务器：<input
+                type="text"
+                id="server"
+                name="server"
+                placeholder="服务器"
+            />
+        </form>
+        <script>
+            let signup = false
+            let email = document.getElementById('op').innerHTML
+            document.getElementById('op').innerHTML = ''
+            window.electronAPI.getserver().then((ser) => {
+                document.getElementById('server').value = ser
+            })
+
+            document
+                .getElementById('input-login')
+                .addEventListener('click', () => {
+                    window.electronAPI.log(signup)
+                    if (signup) {
+                        let username =
+                            document.getElementById('input-username').value
+                        let password =
+                            document.getElementById('input-password').value
+                        let email = document.getElementById('input-email').value
+                        let server = document.getElementById('server').value
+
+                        window.electronAPI
+                            .signup([username, password, email, server])
+                            .then((r) => {
+                                window.electronAPI.log(r)
+                            })
+                    } else {
+                        let username =
+                            document.getElementById('input-username').value
+                        let password =
+                            document.getElementById('input-password').value
+                        let server = document.getElementById('server').value
+
+                        window.electronAPI
+                            .login([username, password, server])
+                            .then((r) => {
+                                window.electronAPI.log(r)
+                            })
+                    }
+                })
+
+            document.getElementById('signup').addEventListener('click', () => {
+                let element = document.getElementById('signup')
+                if (signup) {
+                    element.innerHTML = '点击注册'
+                    document.getElementById('op').innerHTML = ''
+                    document.getElementById('input-username').placeholder =
+                        '用户ID'
+                } else {
+                    element.innerHTML = '点击返回登录'
+                    document.getElementById('op').innerHTML = email
+                    document.getElementById('input-username').placeholder =
+                        '用户名'
+                }
+                signup = !signup
+            })
+        </script>
+    </body>
+</html>
