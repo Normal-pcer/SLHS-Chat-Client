@@ -947,6 +947,11 @@ dir-compare@^3.0.0:
     buffer-equal "^1.0.0"
     minimatch "^3.0.4"
 
+electorn@^0.0.1-security:
+  version "0.0.1-security"
+  resolved "https://registry.npmmirror.com/electorn/-/electorn-0.0.1-security.tgz"
+  integrity sha512-oMceq75Eyd9oMydHm5nKbk1CwsQWyN1fNZCHn5JcqGsIZ13pFJs1D+s548VxYtj4hsaAko3R16iv5NXec4zTng==
+
 electron-packager@^17.1.1:
   version "17.1.1"
   resolved "https://registry.npmmirror.com/electron-packager/-/electron-packager-17.1.1.tgz"
