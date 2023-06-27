@@ -45,6 +45,10 @@ const createWindowMain = () => {
         shell.openExternal(s)
     })
 
+    ipcMain.on('add-friend', (e, t) => {
+        header.addFriend(t)
+    })
+
     mainWindow.loadFile('index.html')
 }
 

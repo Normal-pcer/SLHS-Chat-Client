@@ -56,7 +56,22 @@ async function getMessages() {
         })
     return rt
 }
+function addFriend(friend_id) {
+    let server = getConfig()['server']
+    let axios = require('axios')
+    let data = new FormData()
 
+    data.append('this_user', thisUserId)
+    data.append('that_user', friend_id)
+    data.append('token', token)
+
+    axios
+        .post(server + '/add_friend.php', data)
+        .then((rsp) => {})
+        .catch((err) => {
+            console.log(err)
+        })
+}
 function sendMessage(content, chat) {
     let server = getConfig()['server']
     let axios = require('axios')
@@ -171,4 +186,5 @@ module.exports = {
     getChatInfo,
     resetMessageBox,
     setConfig,
+    addFriend,
 }
