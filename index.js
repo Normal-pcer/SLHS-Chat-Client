@@ -45,6 +45,9 @@ const createWindowMain = () => {
         shell.openExternal(s)
     })
 
+    ipcMain.handle('create-chat', (e, n) => {
+        return header.createChat(n)
+    })
     mainWindow.loadFile('index.html')
 }
 

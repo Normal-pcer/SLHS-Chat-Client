@@ -56,7 +56,24 @@ async function getMessages() {
         })
     return rt
 }
-
+async function createChat(name) {
+    let server = getConfig()['server']
+    let axios = require('axios')
+    let data = new FormData()
+    let rtr = undefined
+    data.append('user_id', thisUserId)
+    data.append('token', token)
+    data.append('name', name)
+    await axios
+        .post(server + '/create_chat.php', data)
+        .then((rsp) => {
+            rtr = rsp['data']
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    return rtr
+}
 function sendMessage(content, chat) {
     let server = getConfig()['server']
     let axios = require('axios')
@@ -171,4 +188,5 @@ module.exports = {
     getChatInfo,
     resetMessageBox,
     setConfig,
+    createChat,
 }

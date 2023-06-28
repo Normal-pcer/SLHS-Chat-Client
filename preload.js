@@ -9,4 +9,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
     getChatInfo: (args) => ipcRenderer.invoke('get-chat-info', args),
     resetMessageBox: () => ipcRenderer.send('msg-box-rst'),
     showImage: (src) => ipcRenderer.send('show-img', src),
+    createChat: (name) => ipcRenderer.invoke('create-chat', name),
 })
